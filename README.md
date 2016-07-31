@@ -15,7 +15,7 @@ npm install --save resource-op
 
 ```js
 import ResourceOp from 'resource-op';
-const ajax = ResourceOp.create('/resource', {
+const resource = ResourceOp.create('/resource', {
   headers: {
     'Content-Type': 'application/json',
     'Authorization': THIS_IS_A_SECRET_TOKEN,
@@ -23,13 +23,13 @@ const ajax = ResourceOp.create('/resource', {
 });
 
 // GET /resource?hello=world
-ajax.get({hello: 'world'});
+resource.get({hello: 'world'});
 // POST {hello: 'world'} -> /resource
-ajax.post({hello: 'world'});
+resource.post({hello: 'world'});
 // PUT {hello: 'world'} -> /resource
-ajax.put({hello: 'world'});
+resource.put({hello: 'world'});
 // DELETE /resource
-ajax.delete();
+resource.delete();
 ```
 
 ### `ResourceOp.create(url: string[, fetchOpts: object[, opts: object]])`
@@ -40,17 +40,18 @@ This is a static method that returns an instance of ResourceOp.
 * fetchOpts: It is same as the second param of fetch. See how to use fetch on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch). Default value is `{}`.
 * opts: If `empty` attribute is `true`, factory will return an instance without any restful methods. Default value is `{}`.
 
-### `resourceOp.addMethod(name: string, METHOD: string)`
+### `resourceOp.addMethod(name: string, METHOD: string[, transform: string | function])`
 
 Add a custom method to the instance.
 
 * name: Method name appended on the instance
 * METHOD: A valid restful method, e.g. `POST`, `PUT` and etc
+* transform: A function that transforms the resource url to a new url. A url string is also accessible.
 
 ```js
 import ResourceOp from 'resource-op';
-const ajax = ResourceOp.create('/resource/_sort');
-ajax.addMethod('sort', 'POST');
+const resource= ResourceOp.create('/resource');
+resource.addMethod('sort', 'POST', url => `${url}/_sort`);
 // POST {a: 1} -> /resource/_sort
-ajax.sort({a: 1});
+resource.sort({a: 1});
 ```

@@ -2,7 +2,7 @@ const METHODS = [
   'GET', 'POST', 'PUT', 'DELETE',
 ];
 
-class Ajax {
+class ResourceOp {
   /**
    * A factory that return an Ajax instance
    * @param {string} url - resource address
@@ -11,7 +11,7 @@ class Ajax {
    * without restful methods if `empty` is `true`
    */
   static create(url, fetchOpts = {}, opts = {}) {
-    const ajax = new Ajax();
+    const ajax = new ResourceOp();
     ajax.defaultOpts = opts;
     ajax.url = url;
     const {empty} = opts;
@@ -26,12 +26,22 @@ class Ajax {
 
   /**
    * Create a new method on the instance
+   * @param {string} methodName
+   * @param {string} METHOD - standard method name
+   * @param {?function|string} transform - tranform `this.url`
    */
-  addMethod(methodName, METHOD) {
+  addMethod(methodName, METHOD, transform) {
     if (this.hasOwnProperty(methodName)) {
       throw new Error(`Method ${methodName} is occupied`);
     }
-    this[methodName] = this._createMethod(METHOD);
+    let url;
+    if (typeof transform === 'string')
+      url = transform;
+    else if (typeof transform === 'function')
+      url = transform(this.url);
+    else
+      url = this.url;
+    this[methodName] = this._createMethod(url, METHOD);
   }
 
   /**
@@ -46,11 +56,12 @@ class Ajax {
   /**
    * Wrap method in opts
    * @private
+   * @param {string} url
    * @param {string} METHOD
    */
-  _createMethod(METHOD) {
+  _createMethod(url, METHOD) {
     return (data, opts) => {
-      return this._request(data, Object.assign(
+      return this._request(url, data, Object.assign(
         {method: METHOD}, this.defaultOpts, opts
       ));
     };
@@ -58,13 +69,14 @@ class Ajax {
 
   /**
    * @private
-   * @param data {object} - params for GET, body for others
-   * @param opts {object}
+   * @param {string} url
+   * @param {Object} data - params for GET, body for others
+   * @param {Object} opts
    */
-  _request(data, opts) {
+  _request(url, data, opts) {
     if (opts.method.toLowerCase() === 'get') {
-      const url = applyParams(this.url, data);
-      return fetch(url, opts);
+      const _url = applyParams(url, data);
+      return fetch(_url, opts);
     }
     var body;
     try {
@@ -73,11 +85,11 @@ class Ajax {
       body = data.toString();
     }
     Object.assign(opts, {body});
-    return fetch(this.url, opts);
+    return fetch(url, opts);
   }
 }
 
-module.exports = Ajax;
+module.exports = ResourceOp;
 
 /**
  * append query string to url
