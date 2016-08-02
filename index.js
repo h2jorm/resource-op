@@ -1,3 +1,5 @@
+const URL = require('url');
+
 const METHODS = [
   'GET', 'POST', 'PUT', 'DELETE',
 ];
@@ -75,8 +77,8 @@ class ResourceOp {
    */
   _request(url, data, opts) {
     if (opts.method.toLowerCase() === 'get') {
-      const _url = applyParams(url, data);
-      return fetch(_url, opts);
+      url = URL.format({pathname: url, query: data});
+      return fetch(url, opts);
     }
     var body;
     try {
@@ -90,26 +92,3 @@ class ResourceOp {
 }
 
 module.exports = ResourceOp;
-
-/**
- * append query string to url
- * @param {string} url
- * @param {?Object} paramsObj - query string object
- * @return {string}
- */
-function applyParams(url, paramsObj = {}) {
-  const urlArr = url.split('?');
-  const pathname = urlArr[0];
-  const paramsArr = urlArr[1] && urlArr[1].split('&') || [];
-  for (let param in paramsObj) {
-    const value = paramsObj[param];
-    if (!value)
-      paramsArr.push(param);
-    else
-      paramsArr.push(`${param}=${value}`);
-  }
-  const paramsStr = paramsArr.join('&');
-  if (paramsStr)
-    return `${pathname}?${paramsStr}`;
-  return url;
-}
