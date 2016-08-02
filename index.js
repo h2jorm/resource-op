@@ -12,7 +12,7 @@ class ResourceOp {
    */
   static create(url, fetchOpts = {}, opts = {}) {
     const ajax = new ResourceOp();
-    ajax.defaultOpts = opts;
+    ajax.defaultOpts = fetchOpts;
     ajax.url = url;
     const {empty} = opts;
     if (!empty)
