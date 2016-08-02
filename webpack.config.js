@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    'resource-op': './index.js',
+    index: './index.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
