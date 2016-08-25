@@ -32,11 +32,11 @@ resource.put({hello: 'world'});
 resource.delete();
 ```
 
-### `ResourceOp.create(url: string[, fetchOpts: object[, opts: object]])`
+### `ResourceOp.create(url: string|function[, fetchOpts: object[, opts: object]])`
 
 This is a static method that returns an instance of ResourceOp.
 
-* url: Resource address
+* url: Resource address, a function returning a string is also acceptable.
 * fetchOpts: It is same as the second param of fetch. See how to use fetch on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch). Default value is `{}`.
 * opts: If `empty` attribute is `true`, factory will return an instance without any restful methods. Default value is `{}`.
 

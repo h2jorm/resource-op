@@ -7,12 +7,15 @@ const METHODS = [
 class ResourceOp {
   /**
    * A factory that return an Ajax instance
-   * @param {string} url - resource address
+   * @param {string|function} url - resource address
    * @param {?Object} fetchOpts - default settings of fetch
    * @param {?{empty: boolean}} opts - return an Ajax instance
    * without restful methods if `empty` is `true`
    */
   static create(url, fetchOpts = {}, opts = {}) {
+    const urlType = typeof url;
+    if (['string', 'function'].indexOf(url) === -1)
+      throw new Error('invalid type of url when creating ResourceOp instance');
     const ajax = new ResourceOp();
     ajax.defaultOpts = fetchOpts;
     ajax.url = url;
@@ -63,7 +66,16 @@ class ResourceOp {
    */
   _createMethod(url, METHOD) {
     return (data, opts) => {
-      return this._request(url, data, Object.assign(
+      let _url;
+      switch (typeof url) {
+        case 'string':
+          _url = url;
+          break;
+        case 'function':
+          _url = url;
+          break;
+      }
+      return this._request(_url, data, Object.assign(
         {method: METHOD}, this.defaultOpts, opts
       ));
     };
