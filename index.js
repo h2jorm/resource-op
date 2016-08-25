@@ -14,7 +14,7 @@ class ResourceOp {
    */
   static create(url, fetchOpts = {}, opts = {}) {
     const urlType = typeof url;
-    if (['string', 'function'].indexOf(url) === -1)
+    if (['string', 'function'].indexOf(urlType) === -1)
       throw new Error('invalid type of url when creating ResourceOp instance');
     const ajax = new ResourceOp();
     ajax.defaultOpts = fetchOpts;
