@@ -72,7 +72,7 @@ class ResourceOp {
           _url = url;
           break;
         case 'function':
-          _url = url;
+          _url = url();
           break;
       }
       return this._request(_url, data, Object.assign(

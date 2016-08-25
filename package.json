@@ -1,6 +1,6 @@
 {
   "name": "resource-op",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "handle ajax operations of a resource",
   "main": "dist/index.js",
   "scripts": {
