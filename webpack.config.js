@@ -11,11 +11,6 @@ module.exports = {
     library: 'ResourceOp',
     libraryTarget: 'umd',
   },
-  resolve: {
-    alias: {
-      '#': path.join(__dirname, 'src'),
-    },
-  },
   module: {
     loaders: [
       {

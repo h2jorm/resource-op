@@ -22,8 +22,8 @@ const resource = ResourceOp.create('/resource', {
   },
 });
 
-// GET /resource?hello=world
-resource.get({hello: 'world'});
+// GET /resource?hello=world&tags=1&tags=2&tags=3
+resource.get({hello: 'world', tags: [1, 2, 3]});
 // POST {hello: 'world'} -> /resource
 resource.post({hello: 'world'});
 // PUT {hello: 'world'} -> /resource
