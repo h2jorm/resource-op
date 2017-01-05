@@ -55,3 +55,15 @@ resource.addMethod('sort', 'POST', url => `${url}/_sort`);
 // POST {a: 1} -> /resource/_sort
 resource.sort({a: 1});
 ```
+
+### `resourceOp.extends(url: string[, fetchOpts: object[, opts: object]])`
+
+Extend an exsited instance and return a new instance. The arguments are the same as `ResourceOp.create`.
+
+```js
+import ResourceOp from 'resource-op';
+const resource= ResourceOp.create('/resource');
+const child = resource.extends('/some');
+// GET -> /resource/some
+resource.get();
+```

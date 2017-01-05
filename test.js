@@ -68,3 +68,13 @@ test('addMethod', t => {
   t.is(error.message, 'Method search is occupied');
 });
 
+test('extends', t => {
+  const resource = ResourceOp.create('/api', {
+    a: 1,
+  });
+  const child = resource.extends('hello', {
+    a: 2,
+  });
+  t.is(child.url, '/api/hello');
+  t.is(child.defaultOpts.a, 2);
+});

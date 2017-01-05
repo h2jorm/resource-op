@@ -49,6 +49,14 @@ class ResourceOp {
     this[methodName] = this._createMethod(url, METHOD);
   }
 
+  extends(url, fetchOpts = {}, opts = {}) {
+    return ResourceOp.create(
+      `${this.url}/${url}`,
+      Object.assign({}, this.defaultOpts, fetchOpts),
+      opts
+    );
+  }
+
   /**
    * Add restful methods
    */
