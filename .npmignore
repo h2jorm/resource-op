@@ -1,1 +1,4 @@
 # nothing here
+.editorconfig
+test.js
+webpack.config.js
