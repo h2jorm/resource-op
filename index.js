@@ -1,4 +1,5 @@
 const URL = require('url');
+const path = require('path');
 
 const METHODS = [
   'GET', 'POST', 'PUT', 'DELETE',
@@ -51,7 +52,7 @@ class ResourceOp {
 
   extends(url, fetchOpts = {}, opts = {}) {
     return ResourceOp.create(
-      `${this.url}/${url}`,
+      path.join(this.url, url),
       Object.assign({}, this.defaultOpts, fetchOpts),
       opts
     );
