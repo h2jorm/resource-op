@@ -44,6 +44,10 @@ test('basic restful', t => {
   t.true(ret.isUrl('/api'));
   ret = resource.post({data: {a: 1}});
   t.true(ret.isBody({data: {a: 1}}));
+
+  ret = resource.patch();
+  t.true(ret.isMethod('patch'));
+  t.true(ret.isUrl('/api'));
 });
 
 test('empty true', t => {

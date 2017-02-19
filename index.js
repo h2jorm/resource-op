@@ -2,7 +2,7 @@ const URL = require('url');
 const path = require('path');
 
 const METHODS = [
-  'GET', 'POST', 'PUT', 'DELETE',
+  'GET', 'POST', 'PUT', 'PATCH', 'DELETE',
 ];
 
 class ResourceOp {
