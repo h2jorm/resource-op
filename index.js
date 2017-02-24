@@ -52,7 +52,7 @@ class ResourceOp {
 
   extends(url, fetchOpts = {}, opts = {}) {
     return ResourceOp.create(
-      path.join(this.url, url),
+      path.join(this.url.toString(), url.toString()),
       Object.assign({}, this.defaultOpts, fetchOpts),
       opts
     );
